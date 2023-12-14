@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @Builder
@@ -19,5 +21,7 @@ public class ProductVariantDetailDTO {
     private String thumb;
     private Integer stock;
     private Integer live;
-    private ColorDTO color;
+    //private ColorDTO color;
+    private String color;
+    private List<SizeDTO> size;
 }

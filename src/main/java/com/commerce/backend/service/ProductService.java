@@ -11,7 +11,7 @@ public interface ProductService {
     ProductDetailsResponse findByUrl(String url);
 
     List<ProductVariantResponse> getAll(Integer page, Integer size, String sort, String category, Float minPrice, Float maxPrice, String color);
-
+    List<ProductDetailsResponse> getAllProduct(Integer page, Integer size, String sort, String category, Float minPrice, Float maxPrice, String color);
     Long getAllCount(String category, Float minPrice, Float maxPrice, String color);
 
     ProductVariant findProductVariantById(Long id);

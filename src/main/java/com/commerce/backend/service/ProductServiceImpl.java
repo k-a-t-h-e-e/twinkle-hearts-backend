@@ -16,6 +16,7 @@ import com.commerce.backend.model.specs.ProductVariantSpecs;
 import com.commerce.backend.service.cache.ProductCacheService;
 import com.commerce.backend.service.cache.ProductVariantCacheService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
@@ -94,6 +95,25 @@ public class ProductServiceImpl implements ProductService {
         return productVariantRepository.findAll(combinations, pageRequest)
                 .stream()
                 .map(productVariantResponseConverter)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ProductDetailsResponse> getAllProduct(Integer page, Integer size, String sort, String category, Float minPrice, Float maxPrice, String color) {
+        PageRequest pageRequest;
+        if (Objects.nonNull(sort) && !sort.isBlank()) {
+            Sort sortRequest = getSort(sort);
+            if (Objects.isNull(sortRequest)) {
+                throw new InvalidArgumentException("Invalid sort parameter");
+            }
+            pageRequest = PageRequest.of(page, size, sortRequest);
+        } else {
+            pageRequest = PageRequest.of(page, size);
+        }
+        Page<Product> productList = productRepository.findAll(pageRequest);
+        return productList
+                .stream()
+                .map(productDetailsResponseConverter)
                 .collect(Collectors.toList());
     }
 

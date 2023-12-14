@@ -1,5 +1,6 @@
 package com.commerce.backend.model.entity;
 
+import com.commerce.backend.converter.model.StringListConverter;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -7,6 +8,7 @@ import lombok.ToString;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -53,4 +55,18 @@ public class Product {
     @Column(name = "unlimited")
     private Integer unlimited;
 
+    @Column(name = "rating")
+    private Integer rating;
+
+    @Convert(converter = StringListConverter.class)
+    @Column(name = "tags", nullable = false)
+    private List<String> tags = new ArrayList<>();
+
+    @Column(name = "new")
+    private Boolean newProduct;
+
+
+
+
 }
+

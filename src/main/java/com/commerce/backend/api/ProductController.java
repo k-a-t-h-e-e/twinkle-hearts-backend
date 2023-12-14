@@ -45,6 +45,23 @@ public class ProductController extends PublicApiController {
         List<ProductVariantResponse> products = productService.getAll(page, pageSize, sort, category, minPrice, maxPrice, color);
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
+    @GetMapping(value = "/allproduct")
+    public ResponseEntity<List<ProductDetailsResponse>> getAllProduct(@RequestParam("page") Integer page,
+                                                               @RequestParam("size") Integer pageSize,
+                                                               @RequestParam(value = "sort", required = false) String sort,
+                                                               @RequestParam(value = "category", required = false) String category,
+                                                               @RequestParam(value = "minPrice", required = false) Float minPrice,
+                                                               @RequestParam(value = "maxPrice", required = false) Float maxPrice,
+                                                               @RequestParam(value = "color", required = false) String color) {
+        if (Objects.isNull(page) || page < 0) {
+            throw new InvalidArgumentException("Invalid page");
+        }
+        if (Objects.isNull(pageSize) || pageSize < 0) {
+            throw new InvalidArgumentException("Invalid pageSize");
+        }
+        List<ProductDetailsResponse> products = productService.getAllProduct(page, pageSize, sort, category, minPrice, maxPrice, color);
+        return new ResponseEntity<>(products, HttpStatus.OK);
+    }
 
     @GetMapping(value = "/product/count")
     public ResponseEntity<Long> getAllCount(@RequestParam(value = "category", required = false) String category,
